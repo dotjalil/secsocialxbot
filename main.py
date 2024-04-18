@@ -1,3 +1,4 @@
+import os
 import tweepy
 import time
 from datetime import datetime, timedelta, timezone
@@ -5,15 +6,15 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 # Twitter Credentials
-api_key = ""
-api_secret = ""
-bearer_token = ""
-access_token = ""
-access_token_secret = ""
+api_key = os.environ.get('API_KEY')
+api_secret = os.environ.get('API_SECRET')
+bearer_token = os.environ.get('BEARER_TOKEN')
+access_token = os.environ.get('ACCESS_TOKEN')
+access_token_secret = os.environ.get('ACCESS_TOKEN_SECRET')
 
 # Slack Credentials
-slack_token = ""
-slack_channel = ""
+slack_token = os.environ.get('SLACK_TOKEN')
+slack_channel = os.environ.get('SLACK_CHANNEL')
 
 # Connecting to Twitter API v2
 client_v2 = tweepy.Client(bearer_token, api_key, api_secret, access_token, access_token_secret)
@@ -42,7 +43,18 @@ def upload_media(filename):
     return media.media_id
 
 # Keywords
-keywords = ["keyword1", "keyword2", "keyword3", "...", "keyword10"]  # Add your keywords here
+keywords = [
+    "تشوية سمعة", "الابتزاز الالكتروني", "ساعدوني", "ابغى ابلغ", "ابغى احد يحذف",
+    "اتعرض للابتزاز", "يبتزني", "يهددني", "ينشر صوري", "الجرائم الالكترونية",
+    "ابتزاز الكتروني", "التشهير الالكتروني", "تشهير", "ابتزاز المقاطع", "ابتزاز الصور",
+    "الابتزاز بالفيديوهات", "ابتزاز البريد", "هكر", "هكر جوالي", "نشر صورتي",
+    "خلك واعي", "بصمة أمان", "بصمة أمان وهمية", "محاسبة بصمة أمان", "حذف حساب منتحل",
+    "انتحال شخصية", "ينتحل شخصيتي", "منتحل شخصية", "حذف حساب", "الحماية من الابتزاز",
+    "الإبلاغ عن الابتزاز", "الابتزاز الرقمي", "ابتزاز البيانات الخصية", "الابتزاز المالي", "الابتزاز العاطفي",
+    "التعرض للابتزاز", "كلنا امن", "تقديم بلاغ", "كيف اشتكي", "كيف ابلغ",
+    "الابتزاز السيبراني", "الابتزاز عن طريق الانترنت", "خطابة", "زواج مسيار", "قوانين الابتزاز",
+    "تسريب البيانات", "تهكير رقمي", "مكافحة الابتزاز", "ارقام بلاغات الابتزاز", "ارقام مكافحة الابتزاز"
+]
 
 # Looking for tweets containing specific keywords from the last 5 minutes
 while True:
