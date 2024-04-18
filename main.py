@@ -68,7 +68,7 @@ while True:
         for tweet in tweets.data:
             print(f"Tweet found: {tweet.text}")
             # Upload GIF and reply to tweet
-            media_id = upload_media("aaa.gif")
+            media_id = upload_media("reply.gif")
             client_v2.create_tweet(text="Your reply message here", in_reply_to_tweet_id=tweet.id, media_ids=[media_id])
             print(f"Replied to tweet ID: {tweet.id}")
 
