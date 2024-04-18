@@ -56,7 +56,7 @@ keywords = [
     "تسريب البيانات", "تهكير رقمي", "مكافحة الابتزاز", "ارقام بلاغات الابتزاز", "ارقام مكافحة الابتزاز"
 ]
 
-# Looking for tweets containing specific keywords from the last 5 minutes
+# Continuous monitoring and responding
 while True:
     current_time = datetime.now(timezone.utc)
     start_time = current_time - timedelta(minutes=5)
@@ -64,16 +64,14 @@ while True:
 
     # Creating a query string with all keywords
     query = " OR ".join(f'"{keyword}"' for keyword in keywords)
-    response = client_v2.search_recent_tweets(query=query, start_time=start_time_str, max_results=10)
+    tweets = client_v2.search_recent_tweets(query=query, start_time=start_time_str, max_results=10)
 
-    if response.data is not None:
-        for tweet in response.data:
-            print("Tweet found:", tweet.text)
-            post_to_slack(tweet)  # Send message to Slack
-
+    if tweets.data:
+        for tweet in tweets.data:
+            print(f"Tweet found: {tweet.text}")
             # Upload GIF and reply to tweet
-            media_id = upload_media("aaa.gif")  # Replace with your GIF path
+            media_id = upload_media("aaa.gif")
             client_v2.create_tweet(text="Your reply message here", in_reply_to_tweet_id=tweet.id, media_ids=[media_id])
-            print("Replied to tweet ID:", tweet.id)
+            print(f"Replied to tweet ID: {tweet.id}")
 
-    time.sleep(300)  # Can use anything from 60 seconds up
+    time.sleep(300)  # Checks every 5 minutes
