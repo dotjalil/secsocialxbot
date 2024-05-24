@@ -67,7 +67,7 @@ while True:
             print(f"Tweet found: {tweet.text}")
             # Upload GIF and reply to tweet
             media_id = upload_media("reply.gif")
-            lient_v2.create_tweet(text="🚨 محتوى مضر تم اكتشافه! 🚨 احذر عند قراءتك هذا المحتوى ولا تعرض نفسك لخطر الابتزاز الالكتروني", in_reply_to_tweet_id=tweet.id, media_ids=[media_id])
+            client_v2.create_tweet(text="🚨 محتوى مضر تم اكتشافه! 🚨 احذر عند قراءتك هذا المحتوى ولا تعرض نفسك لخطر الابتزاز الالكتروني", in_reply_to_tweet_id=tweet.id, media_ids=[media_id])
             print(f"Replied to tweet ID: {tweet.id}")
 
     time.sleep(300)  # Checks every 5 minutes
